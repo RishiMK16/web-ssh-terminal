@@ -1,20 +1,20 @@
-import { TerminalSetup } from './terminalSetup.js';
-import { LoginManager } from './managerComponents/loginManager.js';
-import { CommandManager } from './managerComponents/commandManager.js';
-import { InputManager } from './managerComponents/inputManager.js';
+import TerminalSetup from "./terminalSetup.js";
+import LoginManager from "./managerComponents/loginManager.js";
+import CommandManager from "./managerComponents/commandManager.js";
+import InputManager from "./managerComponents/inputManager.js";
 
-// Initialize terminal
-const terminalSetup = new TerminalSetup('terminal');
-const term = terminalSetup.term;
+const terminalSetup = new TerminalSetup("terminal");
 
-// Command manager
-const commandManager = new CommandManager(term);
-
-// Login manager
-const loginManager = new LoginManager(term, () => {
+const loginManager = new LoginManager(terminalSetup.term, () => {
+  const commandManager = new CommandManager(terminalSetup.term, loginManager);
+  const inputManager = new InputManager(terminalSetup.term, loginManager, commandManager);
+  inputManager.init();
   commandManager.prompt();
 });
 
-// Input manager
-const inputManager = new InputManager(term, loginManager, commandManager);
+// Register input handler first so login input is captured
+const commandManager = new CommandManager(terminalSetup.term, loginManager);
+const inputManager = new InputManager(terminalSetup.term, loginManager, commandManager);
 inputManager.init();
+
+// The LoginManager constructor writes the initial login prompt; no explicit login() method exists.
