@@ -47,6 +47,7 @@ Follow these steps to set up the project locally:
 ```bash
 git clone https://github.com/RishiMK16/web-ssh-terminal.git
 cd web-ssh-terminal
+```
 ## Install Dependencies
 
 ### 1. Install backend dependencies
