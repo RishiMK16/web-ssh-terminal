@@ -1,7 +1,7 @@
 // backend/jwt.js
 import jwt from "jsonwebtoken";
 
-const SECRET_KEY = process.env.JWT_SECRET || "super_secret_key";
+const SECRET_KEY = process.env.JWT_SECRET || "supersecret_key";
 
 // Create a token
 export function generateToken(payload) {
@@ -16,3 +16,4 @@ export function verifyToken(token) {
     return null;
   }
 }
+
