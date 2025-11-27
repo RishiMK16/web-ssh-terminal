@@ -1,10 +1,88 @@
-/* Terminal area */
-.terminal-container {
-  flex-grow: 1;
-  background: #000;
-  color: #0f0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
+/* Page layout */
+.terminal-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  background: #111;
+  padding: 2rem 0;
 }
+
+/* SSH form */
+.ssh-form {
+  background: #1b1f2a;
+  padding: 1.5rem;
+  border-radius: 10px;
+  width: 420px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+}
+
+.ssh-form h2 {
+  color: #00ffb3;
+  margin-bottom: 0.75rem;
+  text-align: center;
+}
+
+.ssh-form input {
+  width: 100%;
+  padding: 0.6rem;
+  margin-bottom: 0.6rem;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+  background: #0d1117;
+  color: #fff;
+  font-size: 0.95rem;
+}
+
+.ssh-form input::placeholder {
+  color: #888;
+}
+
+.ssh-form button {
+  width: 100%;
+  padding: 0.7rem;
+  background: #00ffb3;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #000;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+.ssh-form button:hover:enabled {
+  background: #00e6a4;
+}
+
+.ssh-form button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.error-text {
+  color: #ff6b6b;
+  margin-top: 10px;
+  text-align: center;
+}
+
+/* Terminal container */
+.terminal-container {
+  border-radius: 8px;
+  overflow: hidden;
+  background: #0d1117;
+  transition: all 0.2s ease;
+  margin-top: 2rem;
+}
+
+.terminal-container.hidden {
+  width: 0;
+  height: 0;
+  margin-top: 0;
+}
+
+.terminal-container.visible {
+  width: 900px;
+  height: 600px;
+}
+  

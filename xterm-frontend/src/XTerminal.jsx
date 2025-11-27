@@ -215,8 +215,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Terminal } from "xterm";
 import "xterm/css/xterm.css";
-import "./styles/terminal.css";
-import "./styles/form.css";
+import "./styles/terminal.css" // unified CSS file
 
 export default function XTerminal() {
   const terminalRef = useRef(null);
@@ -253,10 +252,7 @@ export default function XTerminal() {
     });
     termRef.current = term;
 
-    // Ensure terminal container exists in DOM before opening
-    if (terminalRef.current) {
-      term.open(terminalRef.current);
-    }
+    if (terminalRef.current) term.open(terminalRef.current);
 
     ws.onopen = () => {
       term.writeln("\x1b[1;36mConnecting to SSH server...\x1b[0m");
@@ -313,16 +309,15 @@ export default function XTerminal() {
   }, []);
 
   return (
-    <div className="terminal-page" style={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", background: "#111" }}>
+    <div className="terminal-page">
       {!connected && (
-        <div className="ssh-form" style={{ background: "#1b1f2a", padding: "1.5rem", borderRadius: 10, width: 420, boxShadow: "0 6px 18px rgba(0,0,0,0.4)" }}>
-          <h2 style={{ color: "#00ffb3", marginBottom: "0.75rem" }}>SSH Connection</h2>
+        <div className="ssh-form">
+          <h2>SSH Connection</h2>
 
           <input
             placeholder="Host"
             value={form.host}
             onChange={(e) => setForm({ ...form, host: e.target.value })}
-            style={{ width: "100%", padding: "0.6rem", marginBottom: "0.6rem", borderRadius: 6 }}
             autoFocus
           />
 
@@ -331,14 +326,12 @@ export default function XTerminal() {
             type="number"
             value={form.port}
             onChange={(e) => setForm({ ...form, port: Number(e.target.value) })}
-            style={{ width: "100%", padding: "0.6rem", marginBottom: "0.6rem", borderRadius: 6 }}
           />
 
           <input
             placeholder="Username"
             value={form.username}
             onChange={(e) => setForm({ ...form, username: e.target.value })}
-            style={{ width: "100%", padding: "0.6rem", marginBottom: "0.6rem", borderRadius: 6 }}
           />
 
           <input
@@ -346,33 +339,22 @@ export default function XTerminal() {
             type="password"
             value={form.password}
             onChange={(e) => setForm({ ...form, password: e.target.value })}
-            style={{ width: "100%", padding: "0.6rem", marginBottom: "0.8rem", borderRadius: 6 }}
           />
 
           <button
             onClick={connectSSH}
             disabled={loading || !form.host || !form.username || !form.password}
-            style={{ width: "100%", padding: "0.7rem", background: "#00ffb3", border: "none", borderRadius: 6, cursor: "pointer" }}
           >
             {loading ? "Connecting..." : "Connect"}
           </button>
 
-          {error && <div style={{ color: "#ff6b6b", marginTop: 10 }}>{error}</div>}
+          {error && <div className="error-text">{error}</div>}
         </div>
       )}
 
-      {/* Terminal container always present so xterm can attach; hidden until connected */}
       <div
         ref={terminalRef}
-        style={{
-          width: connected ? "900px" : "0",
-          height: connected ? "600px" : "0",
-          marginTop: connected ? "2rem" : "0",
-          borderRadius: 8,
-          overflow: "hidden",
-          transition: "all 0.2s ease",
-          background: "#0d1117",
-        }}
+        className={`terminal-container ${connected ? "visible" : "hidden"}`}
       />
     </div>
   );
